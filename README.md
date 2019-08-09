@@ -21,7 +21,7 @@ cd discovery-visualization
 4. Modify manifest.yml if you'd like to add additional paramters or change the app's name
 
 ##### To run locally:
-- Install the Flask library
+- Install the app's dependencies:
 ```
 pip install -r requirements.txt
 ```
@@ -31,7 +31,7 @@ python visApp.py
 ```
 - Running locally, enter serach term after URL after hostname and port
 http://localhost:8000/<search term>
-E.g.,
+- E.g.,
 http://localhost:8000/professor frink
 
 ##### To run on IBM Cloud:
@@ -41,5 +41,5 @@ ibmcloud cf push
 ```
 - After launching app URL, enter search term in the following format:
 http://<app name>.mybluemix.net/<search term>
-E.g.,
+- E.g.,
 http://<app name>.mybluemix.net/homer
