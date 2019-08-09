@@ -1,0 +1,5 @@
+applications:
+- name: discovery-visualization
+  random-route: true
+  memory: 256M
+  host: discovery-visualization

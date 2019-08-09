@@ -1,0 +1,7 @@
+.gitignore
+LICENSE
+README.md
+vcap-local.json
+log*.txt
+logs\*
+
