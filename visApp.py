@@ -25,9 +25,9 @@ def viewvHeadline():
     version = '2018-12-03'
 
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query&query=id:'+id+'&version='+version
+        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?query=id::'+id+'&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('version', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', apikey)) 
         response = results.json()
         # print(json.dumps(response, indent=2)) # dev
 
@@ -56,7 +56,8 @@ def newHeadlines():
 
         for article in response['results']:
             text_full=article['text']
-            text_clip=text_full[:80]
+            # text_clip=text_full[:80]
+            text_clip=text_full[:160]
             combos[:]=[]
             for word in comboWords:
                 if word.upper() in article['text'].upper():
@@ -112,7 +113,8 @@ def click():
         
         for article in response['results']:
             text_full=article['text']
-            text_clip=text_full[:80]
+            # text_clip=text_full[:80]
+            text_clip=text_full[:160]
             combos[:]=[]
             for word in comboWords:
                 if word.upper() in article['text'].upper():
@@ -206,7 +208,8 @@ def news_page(keyword):
         
         for article in response['results']:
             text_full=article['text']
-            text_clip=text_full[:80]
+            # text_clip=text_full[:80]
+            text_clip=text_full[:160]
             headlines[1][keyword][text_clip]=article['id']
             
     except Exception as e:
