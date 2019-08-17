@@ -15,9 +15,9 @@ This Python app allows a user to query their own Watson Discovery Service collec
 git clone https://github.com/coolcat44/discovery-visualization.git
 cd discovery-visualization
 ```
-3. Open visApp.py and provide the following
-    * Provide the Watson Discovery Service `apikey` credential
-    * Provide the `collection_id` and `environment_id` from your Watson Discovery Service collection
+3. Copy the file ".env.example", rename the copy ".env", and provide the following parameters:
+    * Provide the Watson Discovery Service `apikey` and `url` endpoind
+    * Provide the Watson Discovery Service `collection_id` and `environment_id`
 4. Modify manifest.yml if you'd like to add additional paramters or change the app's name
 
 ##### To run locally:
@@ -33,6 +33,8 @@ python visApp.py
 http://localhost:8000/<search term>
 - E.g.,
 http://localhost:8000/professor frink
+- NOTE: If error `ImportError: No module named dotenv` occurs, run the app with
+`python3 visApp.py`
 
 ##### To run on IBM Cloud:
 1. Run the following command in the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install)

@@ -1,3 +1,4 @@
-Flask
 cf-deployment-tracker
+Flask
+python-dotenv
 requests

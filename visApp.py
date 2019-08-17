@@ -1,17 +1,20 @@
 import requests
 import sys
 import os
+from os.path import join, dirname
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, json, jsonify
-
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
-apikey = ''
-collection_id = ''
-environment_id = ''
-endpoint = 'https://gateway.watsonplatform.net/discovery/api'
+APIKEY = os.getenv('APIKEY')
+URL = os.getenv('URL')
+COLLECTION_ID = os.getenv('COLLECTION_ID')
+ENVIRONMENT_ID = os.getenv('ENVIRONMENT_ID')
 
 
 @app.route('/')
@@ -25,9 +28,9 @@ def viewvHeadline():
     version = '2018-12-03'
 
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?query=id::'+id+'&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?query=id::'+id+'&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('apikey', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
         # print(json.dumps(response, indent=2)) # dev
 
@@ -48,9 +51,9 @@ def newHeadlines():
     version = '2018-12-03'
     
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::'+combo+'&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::'+combo+'&return=text&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('apikey', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
         # print(json.dumps(response, indent=2)) # dev
 
@@ -105,9 +108,9 @@ def click():
     combo=combo[:-1]
 
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::'+combo+'&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::'+combo+'&return=text&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('apikey', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
         # print(json.dumps(response, indent=2)) # dev
         
@@ -133,9 +136,9 @@ def click():
     output = { 'results': { 'nodes': [], 'links': [], 'headlines': headlines, 'combo': combo } }
  
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+text+'"&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+text+'"&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('apikey', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response=results.json()
         # print(json.dumps(response, indent=2)) # dev
         
@@ -200,9 +203,9 @@ def news_page(keyword):
     version='2018-12-03'
 
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+keyword+'"&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+keyword+'"&return=text&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('apikey', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
         # print(json.dumps(response, indent=2)) # dev
         
@@ -216,9 +219,9 @@ def news_page(keyword):
         print("Exception = ",e)
  
     try:
-        get_url = endpoint+'/v1/environments/'+environment_id+'/collections/'+collection_id+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+keyword+'"&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+keyword+'"&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
-        results = requests.get(url=get_url, auth=('apikey', apikey)) 
+        results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response=results.json()
         # print(json.dumps(response, indent=2)) # dev
 
