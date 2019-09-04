@@ -51,7 +51,7 @@ def newHeadlines():
     version = '2018-12-03'
     
     try:
-        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::'+combo+'&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:'+combo+'&return=text&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
@@ -108,7 +108,7 @@ def click():
     combo=combo[:-1]
 
     try:
-        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::'+combo+'&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:'+combo+'&return=text&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
@@ -136,7 +136,7 @@ def click():
     output = { 'results': { 'nodes': [], 'links': [], 'headlines': headlines, 'combo': combo } }
  
     try:
-        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+text+'"&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:"'+text+'"&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response=results.json()
@@ -203,7 +203,7 @@ def news_page(keyword):
     version='2018-12-03'
 
     try:
-        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+keyword+'"&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:"'+keyword+'"&return=text&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
@@ -219,7 +219,7 @@ def news_page(keyword):
         print("Exception = ",e)
  
     try:
-        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text::"'+keyword+'"&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:"'+keyword+'"&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response=results.json()
