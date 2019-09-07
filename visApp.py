@@ -32,7 +32,7 @@ def viewvHeadline():
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
-        # print(json.dumps(response, indent=2)) # dev
+        # print('response = ' + json.dumps(response, indent=2)) # dev
 
     except Exception as e:
         print("Exception = ",e)
@@ -112,7 +112,7 @@ def click():
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
-        # print(json.dumps(response, indent=2)) # dev
+        print('response 1 /click = ' + json.dumps(response, indent=2)) # dev
         
         for article in response['results']:
             text_full=article['text']
@@ -139,8 +139,10 @@ def click():
         get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?aggregation=nested(enriched_text.entities).filter(enriched_text.entities.type::"Person").term(enriched_text.entities.text,count:10)&deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:"'+text+'"&version='+version
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
-        response=results.json()
+        response = results.json()
         # print(json.dumps(response, indent=2)) # dev
+
+        print('response 2 /click = ' + json.dumps(response, indent=2)) # dev
         
         #add to bigWords
         wordList = []
@@ -178,6 +180,8 @@ def click():
     except Exception as e:
         print("Exception = ",e)
                 
+    print('output /click = ' + json.dumps(output, indent=2)) # dev
+
     return jsonify(output)
 
 
@@ -203,11 +207,12 @@ def news_page(keyword):
     version='2018-12-03'
 
     try:
-        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:"'+keyword+'"&return=text&version='+version
+        get_url = URL+'/v1/environments/'+ENVIRONMENT_ID+'/collections/'+COLLECTION_ID+'/query?deduplicate=false&highlight=true&passages=true&passages.count=5&query=enriched_text.entities.text:"'+keyword+'"&version='+version
+        # '&return=text'
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response = results.json()
-        # print(json.dumps(response, indent=2)) # dev
+        print('response 1 /keyword = ' + json.dumps(response, indent=2)) # dev
         
         for article in response['results']:
             text_full=article['text']
@@ -223,7 +228,7 @@ def news_page(keyword):
         # results = requests.get(url=get_url, auth=(username, password)) 
         results = requests.get(url=get_url, auth=('apikey', APIKEY)) 
         response=results.json()
-        # print(json.dumps(response, indent=2)) # dev
+        print('response 2 /keyword = ' + json.dumps(response, indent=2)) # dev
 
         #add to bigWords
         wordList = []
@@ -244,6 +249,11 @@ def news_page(keyword):
             nodes.append({'x': 300, 'y': 200, 'text': word, 'size': 1.5, 'color': 'white', 'expand': 0})
             links.append({'source':count + 1,'target':0})
             count+=1
+
+    print('nodes response /keyword = ' + json.dumps(nodes, indent=2)) # dev
+    print('links response /keyword = ' + json.dumps(links, indent=2)) # dev
+    print('bigWords response /keyword = ' + json.dumps(bigWords, indent=2)) # dev
+    print('headlines response /keyword = ' + json.dumps(headlines, indent=2)) # dev
          
     return render_template('cloud.html', nodes=json.dumps(nodes), links=json.dumps(links), bigWords=json.dumps(bigWords), headlines=json.dumps(headlines))
 
