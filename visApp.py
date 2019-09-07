@@ -87,7 +87,12 @@ def click():
     links=request.json['links']
     bigWords=request.json['bigWords']
     index=request.json['current']
-    
+
+    print('nodes request /click = ' + json.dumps(nodes, indent=2)) # dev
+    print('links request /click = ' + json.dumps(links, indent=2)) # dev
+    print('bigWords request /click = ' + json.dumps(bigWords, indent=2)) # dev
+    print('index/current request /click = ' + json.dumps(index, indent=2)) # dev
+
     x = nodes[index]['x']
     y = nodes[index]['y']
     text = nodes[index]['text']
